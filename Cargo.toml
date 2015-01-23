@@ -1,0 +1,20 @@
+[package]
+
+name = "apns"
+version = "0.0.1"
+description = "Apple Push Notification Service (APNS) library"
+authors = ["Rohit Joshi <rohit.joshi@gmail.com>"]
+license = "MIT/Apache Dual License"
+keywords = ["apns", "push-notification", "client"]
+documentation = "https://github.com/rohitjoshi/apns/doc/apns/"
+readme = "README.md"
+
+
+[dependencies.net-utils]
+git = "https://github.com/rohitjoshi/net-utils.git"
+
+[dependencies]
+log = "*"
+
+[dependencies.rustc-serialize]
+rustc-serialize = "*"
