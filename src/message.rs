@@ -127,10 +127,10 @@ impl ApnsMessage {
 	pub fn to_alert_payload_type(json_str: &String) -> Result<AlertPayloadType, BuilderError> {
 		let mut alert_payload : Option<AlertPayloadType> = None;
 		//if it is string value e.g "test"  than return
-        if json_str.as_slice().contains_char('{') == false {
-          return Ok(AlertPayloadType::StrAlert(json_str.clone()));
-        }
-        
+		if json_str.as_slice().contains_char('{') == false {
+			return Ok(AlertPayloadType::StrAlert(json_str.clone()));
+		}
+		
 		let mut json_result = Json::from_str(json_str.as_slice());
 		if json_result.is_err() {
 			let e : Result<AlertPayloadType, BuilderError> = Err(json_result.err().unwrap());
@@ -138,20 +138,20 @@ impl ApnsMessage {
 		}
 		let json_result = json_result.unwrap();
 		if json_result.is_string() {
- 			return Ok(AlertPayloadType::StrAlert(json_result.as_string().unwrap().to_string()));
- 		}else {
- 			let mut decoder = rustc_serialize::json::Decoder::new(json_result.clone());
- 			let alert_dict_object: AlertDictionary = match Decodable::decode(&mut decoder) {
- 				Ok(v) => v,
- 				Err(e) => {
- 					return Err(ParserError::IoError(IoErrorKind::OtherIoError, 
- 						"Failed to convert to AlertDictionary object")); }
- 				}; 
- 				return Ok(AlertPayloadType::DictAlert(alert_dict_object));
+			return Ok(AlertPayloadType::StrAlert(json_result.as_string().unwrap().to_string()));
+		}else {
+			let mut decoder = rustc_serialize::json::Decoder::new(json_result.clone());
+			let alert_dict_object: AlertDictionary = match Decodable::decode(&mut decoder) {
+				Ok(v) => v,
+				Err(e) => {
+					return Err(ParserError::IoError(IoErrorKind::OtherIoError, 
+						"Failed to convert to AlertDictionary object")); }
+				}; 
+				return Ok(AlertPayloadType::DictAlert(alert_dict_object));
 
- 		}
+			}
 
-	}
+		}
  }
 
 
